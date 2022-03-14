@@ -49,4 +49,4 @@ class SignUpForm(UserCreationForm):
             user.is_active = True
             user.save()
             return True
-    return False
+        return False
