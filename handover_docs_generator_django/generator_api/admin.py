@@ -6,9 +6,8 @@ from .models import User
 
 class UserAdmin(UserAdmin):
     model = User
-    fieldsets = UserAdmin.fieldsets + ((None, {
+    fieldsets =  (None, {
         'fields':('email',),
-    }),)
-    list_display = '__all__'
+    },),
 
 admin.site.register(User,UserAdmin)
