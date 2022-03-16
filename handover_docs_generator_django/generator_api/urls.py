@@ -1,7 +1,7 @@
 from unicodedata import name
 from django.urls import path
-from . import views
+from rest_framework import routers
+from .views import UserViewSet
 
-urlpatterns = [
-    path('api/users', )
-]
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)

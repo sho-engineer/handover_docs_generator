@@ -1,5 +1,8 @@
-from django.views.generic.edit import CreateView
-from django.urls import reverse_lazy
-from django.views.generic import TemplateView
+from rest_framework import viewsets, filters
 
-from registration.forms import SignUpForm, activate_user
+from .models import User
+from .serializer import UserSerializer
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
