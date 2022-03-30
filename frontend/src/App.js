@@ -4,17 +4,12 @@ import About from './About';
 import User from './User';
 import Home from './Home';
 import Login from './components/accounts/Login';
+import MenuAppBar from './components/layouts/MenuAppBar';
 
 const App = () => {
   return (
-    <div>
-     <BrowserRouter>
-      <Routes>
-        <Route exact path='/' element={<Home />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/user' element={<User />} />
-      </Routes>
-     </BrowserRouter>
+    <div className='App'>
+    <MenuAppBar />
     </div>
   );
 }

@@ -1,13 +1,11 @@
-import React from 'react'
-import { Grid } from '@mui/material'
+import React, {useState} from 'react'
 
 const Login = () => {
+  const [test, setTest] = useState("test");
   return (
-    <Grid>
-        <Paper elevation={10}>
-
-        </Paper>
-    </Grid>
+   <div>
+     <h1>テスト</h1>
+   </div>
   )
 }
 
