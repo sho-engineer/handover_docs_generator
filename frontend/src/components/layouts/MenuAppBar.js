@@ -3,10 +3,10 @@ import { AppBar } from '@mui/material';
 import { Box } from '@mui/system';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Link, Route } from 'react-router-dom';
 import { Tab, Tabs } from '@mui/material';
-import Home from '../../Home';
-import About from '../../About';
+import Home from '../Home';
+import About from '../About';
+import Mypage from '../accounts/Mypage';
 
 const MenuAppBar = () => {
 
@@ -48,11 +48,13 @@ const MenuAppBar = () => {
           >
           <Tab label="HOME" />
           <Tab label="ABOUT" />
+          <Tab label="Account" />
         </Tabs>
         </StyledAppBar>
       </Box>
       { value === 0 && <Home /> }
       { value === 1 && <About /> }
+      { value === 2 && <Mypage /> }
     </>
   )
 }
