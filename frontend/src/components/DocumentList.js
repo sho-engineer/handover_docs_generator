@@ -53,7 +53,7 @@ export default function DocumentList() {
     padding-top: 15px;
   `
   const StyledGrid = styled(Grid)`
-    margin-top:12px;
+    margin-top:8px;
   `
 
   const handleChangePage = (event, newPage) => {
