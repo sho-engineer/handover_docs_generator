@@ -8,6 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import styled from 'styled-components';
+import { Grid } from '@mui/material';
 
 const columns = [
   { id: 'ID', label: 'ID', minWidth: 170 },
@@ -51,6 +52,9 @@ export default function DocumentList() {
     text-align: center;
     padding-top: 15px;
   `
+  const StyledGrid = styled(Grid)`
+    margin-top:12px;
+  `
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -63,55 +67,77 @@ export default function DocumentList() {
 
   return (
     <>
-      <StyledTitle>Docs List</StyledTitle>
-      <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-        <TableContainer sx={{ maxHeight: 440 }}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                {columns.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{ minWidth: column.minWidth }}
-                  >
-                    {column.label}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
-                  return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                      {columns.map((column) => {
-                        const value = row[column.id];
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === 'number'
-                              ? column.format(value)
-                              : value}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>
+      <Grid container spacing={4} columns={16}>
+        <Grid item xs={12} > 
+          <StyledTitle>Docs List</StyledTitle>
+          <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+            <TableContainer sx={{ maxHeight: 440 }}>
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead>
+                  <TableRow>
+                    {columns.map((column) => (
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{ minWidth: column.minWidth }}
+                      >
+                        {column.label}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row) => {
+                      return (
+                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                          {columns.map((column) => {
+                            const value = row[column.id];
+                            return (
+                              <TableCell key={column.id} align={column.align}>
+                                {column.format && typeof value === 'number'
+                                  ? column.format(value)
+                                  : value}
+                              </TableCell>
+                            );
+                          })}
+                        </TableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[10, 25, 100]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Paper>
+        </Grid>
+        <StyledGrid item xs={3.8}>
+            <StyledTitle>New Docs</StyledTitle>
+            <Paper elevation={1}>
+              <p>テスト1</p>
+              <p>テスト2</p>
+              <p>テスト3</p>
+              <p>テスト4</p>
+              <p>テスト5</p>
+            </Paper>
+            <StyledTitle>Edit History</StyledTitle>
+            <Paper elevation={1}>
+              <p>テスト1</p>
+              <p>テスト2</p>
+              <p>テスト3</p>
+              <p>テスト4</p>
+              <p>テスト5</p>
+            </Paper>
+        </StyledGrid>
+      </Grid>
     </>
   );
 }
