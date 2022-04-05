@@ -47,8 +47,8 @@ const MenuAppBar = () => {
           centered
           >
           <Tab label="HOME" />
-          <Tab label="ABOUT" />
-          <Tab label="Account" />
+          <Tab label="CREATE" />
+          <Tab label="ACCOUNT" />
         </Tabs>
         </StyledAppBar>
       </Box>
