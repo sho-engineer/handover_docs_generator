@@ -5,7 +5,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { Tab, Tabs } from '@mui/material';
 import Home from '../Home';
-import About from '../About';
+import CreatePage from '../CreatePage';
 import Mypage from '../accounts/Mypage';
 
 const MenuAppBar = () => {
@@ -47,14 +47,14 @@ const MenuAppBar = () => {
           centered
           >
           <Tab label="HOME" />
-          <Tab label="CREATE" />
           <Tab label="ACCOUNT" />
+          <Tab label="CREATE" />
         </Tabs>
         </StyledAppBar>
       </Box>
       { value === 0 && <Home /> }
-      { value === 1 && <About /> }
-      { value === 2 && <Mypage /> }
+      { value === 1 && <Mypage /> }
+      { value === 2 && <CreatePage /> }
     </>
   )
 }
