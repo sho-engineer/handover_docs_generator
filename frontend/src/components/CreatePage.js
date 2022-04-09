@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { Paper } from '@mui/material';
 import styled from 'styled-components';
-import StyledTextField from './StyledTextField';
+import StyledTextField from './StyledInputs';
 
 const CreatePage = () => {
   const StyledPaper = styled(Paper)`
@@ -15,6 +15,7 @@ const CreatePage = () => {
 
   return (
     <StyledPaper elevation={2}>
+        <StyledTextField />
     </StyledPaper>
   )
 }
