@@ -2,7 +2,9 @@ import React, { useState, ChangeEvent } from 'react';
 import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 const StyledInputs = () => {
     const [genre, setGenre] = useState('');
@@ -41,7 +43,16 @@ const StyledInputs = () => {
     const item = lists.map( list => {
         if(list === "執筆日")
         {
-            return
+            return(
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DesktopDatePicker
+                    label="Date desktop"
+                    inputFormat="MM/dd/yyyy"
+                    value={value}
+                    onChange={handleDateChange}
+                    />
+                </LocalizationProvider>
+            )
         }
         else if(list === "ドキュメント種別"){
             return(
