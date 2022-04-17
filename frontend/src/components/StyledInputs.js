@@ -1,7 +1,8 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -9,6 +10,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 const StyledInputs = () => {
     const [genre, setGenre] = useState('');
     const [value, setValue] = useState('');
+    const [buttonCondition, setButtonCondition] = useState(false);
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         setGenre(event.value);
@@ -16,6 +18,14 @@ const StyledInputs = () => {
     const handleDateChange = (newValue) => {
         setValue(newValue);
     }
+
+    useEffect(() => {
+        if(genre != ""){
+            setButtonCondition(false);
+        }else{
+            setButtonCondition(true);
+        }
+    });
 
     const lists = [
         "タイトル",
@@ -40,19 +50,25 @@ const StyledInputs = () => {
         font-family: 'Cherry Swash', cursive;
         color: #696969;
     `
+    const StyledButton = styled(Button)`
+        width:30%;
+        padding:10px 10px;
+        margin: 10px 10px 30px 10px; 
+    `
+
     const item = lists.map( list => {
         if(list === "執筆日")
         {
-            return(
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DesktopDatePicker
-                    label="Date desktop"
-                    inputFormat="MM/dd/yyyy"
-                    value={value}
-                    onChange={handleDateChange}
-                    />
-                </LocalizationProvider>
-            )
+            return //(
+                // <LocalizationProvider dateAdapter={AdapterDateFns}>
+                //     <DesktopDatePicker
+                //     label="Date desktop"
+                //     inputFormat="MM/dd/yyyy"
+                //     value={value}
+                //     onChange={handleDateChange}
+                //     />
+                // </LocalizationProvider>
+            // )
         }
         else if(list === "ドキュメント種別"){
             return(
@@ -88,7 +104,9 @@ const StyledInputs = () => {
 
 return (
     <>
-    {item}  
+    {item}
+    <br/>
+    <StyledButton variant='outlined' color='inherit' disabled={ buttonCondition }>作成</StyledButton>
     </>
     )
 }
