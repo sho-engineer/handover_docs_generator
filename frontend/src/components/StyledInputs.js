@@ -3,9 +3,6 @@ import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 const StyledInputs = () => {
     const [genre, setGenre] = useState('');
@@ -20,7 +17,7 @@ const StyledInputs = () => {
     }
 
     useEffect(() => {
-        if(genre != ""){
+        if(genre != "" && value != ""){
             setButtonCondition(false);
         }else{
             setButtonCondition(true);
@@ -59,16 +56,13 @@ const StyledInputs = () => {
     const item = lists.map( list => {
         if(list === "執筆日")
         {
-            return //(
-                // <LocalizationProvider dateAdapter={AdapterDateFns}>
-                //     <DesktopDatePicker
-                //     label="Date desktop"
-                //     inputFormat="MM/dd/yyyy"
-                //     value={value}
-                //     onChange={handleDateChange}
-                //     />
-                // </LocalizationProvider>
-            // )
+            return (
+                <>
+                    <br/>
+                    <StyledTitle>{list}</StyledTitle>
+                    <DecoratedTextField type="date" onChange={ handleDateChange } />
+                </>
+            )
         }
         else if(list === "ドキュメント種別"){
             return(
