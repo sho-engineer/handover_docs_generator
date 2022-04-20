@@ -1,98 +1,86 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import styled from 'styled-components';
-import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
+import ListComponent from './ListComponent';
+
+const commons = [
+    "タイトル",
+    "ドキュメント種別",
+    "文責"
+]
+
+const handOverLists = [
+    "執筆日",
+    "目的",
+    "開発環境",
+    "ファイル構成",
+] 
+
+const genres = [
+    "引き継ぎ資料",
+    "技術ドキュメント"
+]
 
 const StyledInputs = () => {
+    const [title, setTitle] = useState('');
     const [genre, setGenre] = useState('');
     const [value, setValue] = useState('');
-    const [buttonCondition, setButtonCondition] = useState(false);
+    const [isButtonActivate, setIsButtonActivate] = useState(false);
+    const [author, setAuthor] = useState('');
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handlerTitle = (event:ChangeEvent<HTMLInputElement>) => {
         setGenre(event.value);
     };
-    const handleDateChange = (newValue) => {
-        setValue(newValue);
+    const handleGenre = (event:ChangeEvent<HTMLInputElement>) => {
+        setGenre(event.value);
+    };
+    const handleDateChange = (event:ChangeEvent<HTMLInputElement>) => {
+        setValue(event.target.value);
+    }
+    const handleAuthor = (event: ChangeEvent<HTMLInputElement>) => {
+        setAuthor(event.target.value);
     }
 
     useEffect(() => {
-        if(genre != "" && value != ""){
-            setButtonCondition(false);
+        if(genre != "" && author != "" ){
+            setIsButtonActivate(false);
+
         }else{
-            setButtonCondition(true);
+            setIsButtonActivate(true);
         }
     });
 
-    const lists = [
-        "タイトル",
-        "ドキュメント種別",
-        "文責",
-        "執筆日",
-    ]
-
-    const genres = [
-        "引き継ぎ資料",
-        "技術ドキュメント"
-    ]
-
-    const DecoratedTextField = styled(TextField)`
-        width:40%;
-        margin-bottom:20px;
-    `
-
-    const StyledTitle = styled.h2`
-        font-weight: bold;
-        margin: 10px 35px;
-        font-family: 'Cherry Swash', cursive;
-        color: #696969;
-    `
     const StyledButton = styled(Button)`
         width:30%;
         padding:10px 10px;
         margin: 10px 10px 30px 10px; 
     `
 
-    const item = lists.map( list => {
-        if(list === "執筆日")
-        {
-            return (
-                <>
-                    <br/>
-                    <StyledTitle>{list}</StyledTitle>
-                    <DecoratedTextField type="date" onChange={ handleDateChange } />
-                </>
-            )
-        }
-        else if(list === "ドキュメント種別"){
-            return(
-                <>
-                    <StyledTitle>{list}</StyledTitle>
-                    <DecoratedTextField
-                        id="outlined-select-currency"
-                        select
-                        label="ドキュメント種別"
-                        value={genre}
-                        onChange={handleChange}
-                        helperText="ドキュメント種別を入力してください"
-                        >
-                        {genres.map((option) => (
-                            <MenuItem key={option} value={option}>
-                            {option}
-                            </MenuItem>
-                        ))}
-                    </DecoratedTextField>
-                </>
-            )
-        }
-        else
-        {
-            return(
-                <>
-                    <StyledTitle>{list}</StyledTitle>
-                    <DecoratedTextField id="outlined-basic" label={ list } variant="outlined" />
-                </>
-            );
+    const item = commons.map( list => {
+        switch(list){
+            case "執筆日":
+                return (
+                    <>
+                        <br/>
+                        <ListComponent type={"date"} title={list} handler={handleAuthor} />
+                    </>
+                )
+            case "ドキュメント種別":
+                return(
+                    <>
+                        <ListComponent 
+                            title={list} 
+                            handler={handleGenre} 
+                            array={genres}
+                        />
+                    </>
+                )
+            default:
+                return(
+                    <>
+                        <ListComponent title={list} handler={handlerTitle} />
+                    </>
+                );
         }
     })
 
@@ -100,7 +88,7 @@ return (
     <>
     {item}
     <br/>
-    <StyledButton variant='outlined' color='inherit' disabled={ buttonCondition }>作成</StyledButton>
+    <StyledButton variant='outlined' color='inherit' disabled={ isButtonActivate }>作成</StyledButton>
     </>
     )
 }
