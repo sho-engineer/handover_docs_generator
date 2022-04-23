@@ -1,7 +1,6 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import { AppBar } from '@mui/material';
 import { Box } from '@mui/system';
-import { useState } from 'react';
 import styled from 'styled-components';
 import { Tab, Tabs } from '@mui/material';
 import Home from '../Home';
@@ -28,7 +27,6 @@ const MenuAppBar = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  console.log(value);
 
   return (
     <>
