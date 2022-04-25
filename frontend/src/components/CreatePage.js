@@ -5,6 +5,12 @@ import styled from 'styled-components';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 
 const commons = [
   "タイトル",
@@ -22,6 +28,12 @@ const handOverLists = [
 const genres = [
   "引き継ぎ資料",
   "技術ドキュメント"
+]
+
+const environs = [
+  "OS",
+  "言語",
+  "バージョン"
 ]
 
 const StyledPaper = styled(Paper)`
@@ -61,6 +73,20 @@ const InputContent = styled.p`
 
 `
 
+const StyledTableContainer = styled(TableContainer)`
+  width:40%;
+  margin:0 auto;
+  margin-top:50px;
+`
+
+const StyledTableCell = styled(TableCell)`
+  width:50%;
+`
+
+const TextFieldInTables = styled(DecoratedTextField)`
+  width:100%;
+`
+
 const CreatePage = () => {
   const [title, setTitle] = useState('');
   const [genre, setGenre] = useState('');
@@ -68,12 +94,16 @@ const CreatePage = () => {
   const [isButtonActivate, setIsButtonActivate] = useState(false);
   const [author, setAuthor] = useState('');
   const [goal, setGoal] = useState('');
+  const [environ, setEnviron] = useState('');
+  const [environItem, setEnvironItem] = useState('');
 
   const handleTitle = e => setTitle(e.target.value);
   const handleGenre = e => setGenre(e.target.value);
   const handleDateChange = e => setDate(e.target.value);
   const handleAuthor = e => setAuthor(e.target.value);
   const handleGoal = e => setGoal(e.target.value);
+  const handleEnviron = e => setEnviron(e.target.value);
+  const handleEnvironItem = e => setEnvironItem(e.target.value);
   
 
   useEffect(() => {
@@ -130,7 +160,38 @@ const CreatePage = () => {
             </>
           )
         case "開発環境":
-          return <StyledIntputs  title={list} handler={handleDateChange} />
+          return(
+            <StyledTableContainer component={Paper}>
+              <Table size="small" aria-label="a dense table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align='center'>分類</TableCell>
+                    <TableCell align='center'>情報</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <StyledTableCell align='center'>
+                      <TextFieldInTables
+                        select
+                        label={list}
+                        onChange={handleEnviron}
+                      >
+                        {environs.map((val, index) => (
+                            <MenuItem key={index} value={val}>
+                                {val}
+                            </MenuItem>
+                        ))}
+                      </TextFieldInTables>
+                    </StyledTableCell>
+                    <StyledTableCell align='left'>
+                      <TextFieldInTables onChange={handleEnvironItem}/>
+                    </StyledTableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </StyledTableContainer>
+          ) 
         case "ファイル構成":
           return(
             <>
