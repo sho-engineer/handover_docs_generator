@@ -96,6 +96,7 @@ const CreatePage = () => {
   const [goal, setGoal] = useState('');
   const [environ, setEnviron] = useState('');
   const [environItem, setEnvironItem] = useState('');
+  const [count, setCount] = useState(3);
 
   const handleTitle = e => setTitle(e.target.value);
   const handleGenre = e => setGenre(e.target.value);
@@ -105,6 +106,7 @@ const CreatePage = () => {
   const handleEnviron = e => setEnviron(e.target.value);
   const handleEnvironItem = e => setEnvironItem(e.target.value);
   
+  let counts = [...Array(count)]
 
   useEffect(() => {
       if(title != "" && genre != "" && author != "" && goal != ""){
@@ -117,6 +119,12 @@ const CreatePage = () => {
 
   const buttonClicked = () => {
     alert(`タイトル：${title} ジャンル：${genre} 日付：${date} 著者：${author} 内容:${goal}`);
+  }
+  const plus = () => {
+    setCount(count+1);
+  }
+  const minus = () => {
+    setCount(count-1);
   }
 
   const common = commons.map( list => {
@@ -161,36 +169,46 @@ const CreatePage = () => {
           )
         case "開発環境":
           return(
-            <StyledTableContainer component={Paper}>
-              <Table size="small" aria-label="a dense table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell align='center'>分類</TableCell>
-                    <TableCell align='center'>情報</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <StyledTableCell align='center'>
-                      <TextFieldInTables
-                        select
-                        label={list}
-                        onChange={handleEnviron}
-                      >
-                        {environs.map((val, index) => (
-                            <MenuItem key={index} value={val}>
-                                {val}
-                            </MenuItem>
-                        ))}
-                      </TextFieldInTables>
-                    </StyledTableCell>
-                    <StyledTableCell align='left'>
-                      <TextFieldInTables onChange={handleEnvironItem}/>
-                    </StyledTableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </StyledTableContainer>
+            <>
+              <StyledTableContainer component={Paper}>
+                <Table size="small" aria-label="a dense table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell align='center'>分類</TableCell>
+                      <TableCell align='center'>情報</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                      {
+                        counts.map(() => {
+                          return(
+                            <TableRow>
+                              <StyledTableCell align='center'>
+                                <TextFieldInTables
+                                  select
+                                  label={list}
+                                  onChange={handleEnviron}
+                                >
+                                  {environs.map((val, index) => (
+                                      <MenuItem key={index} value={val}>
+                                          {val}
+                                      </MenuItem>
+                                  ))}
+                                </TextFieldInTables>
+                              </StyledTableCell>
+                              <StyledTableCell align='left'>
+                                <TextFieldInTables onChange={handleEnvironItem}/>
+                              </StyledTableCell>
+                            </TableRow>
+                          )
+                        })
+                      }
+                  </TableBody>
+                </Table>
+                <button onClick={plus}>+</button>
+                <button onClick={minus}>-</button>
+              </StyledTableContainer>
+            </>
           ) 
         case "ファイル構成":
           return(
@@ -209,7 +227,7 @@ const CreatePage = () => {
 
   return (
     <StyledPaper elevation={2}>
-      <pInputContent>全ての事項が入力必須です。</pInputContent>
+      <InputContent>全ての事項が入力必須です。</InputContent>
       {common}
       <br/>
       {genre === "引き継ぎ資料" || genre === "" ? <div>{handOverItem}</div> : "テスト"}
