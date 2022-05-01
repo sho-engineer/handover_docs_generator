@@ -1,5 +1,4 @@
 import React,{ useState, useEffect } from 'react'
-import { Link } from 'react-router-dom';
 import { Paper } from '@mui/material';
 import styled from 'styled-components';
 import Button from '@mui/material/Button';
@@ -21,6 +20,7 @@ const commons = [
 
 const handOverLists = [
   "目的",
+  "アプリ概要",
   "開発環境",
   "ファイル構成",
 ] 
