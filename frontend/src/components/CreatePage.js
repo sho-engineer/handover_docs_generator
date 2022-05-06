@@ -11,19 +11,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
-const commons = [
-  "タイトル",
-  "ドキュメント種別",
-  "文責",
-  "執筆日"
-]
-
 const handOverLists = [
   "目的",
   "アプリ概要",
   "開発環境",
-  "ファイル構成",
-] 
+  "アプリケーション全体像",
+  "参考資料"
+]
 
 const genres = [
   "引き継ぎ資料",
@@ -107,6 +101,12 @@ const CreatePage = () => {
   const handleEnvironItem = e => setEnvironItem(e.target.value);
   
   let counts = [...Array(count)]
+  const commons = [
+    {item:"タイトル", target:{ title }},
+    {item:"ドキュメント種別", target:{ genre }},
+    {item:"文責", target:{ author }},
+    {item:"執筆日", target:{ date }},
+  ]
 
   useEffect(() => {
       if(title != "" && genre != "" && author != "" && goal != ""){
@@ -128,26 +128,27 @@ const CreatePage = () => {
   }
 
   const common = commons.map( list => {
-    switch(list){
-      case "タイトル":
-        return(
-          <>
-            <StyledIntputs title={list} handler={handleTitle} />
-            <InputContent>入力内容：{title}</InputContent>
-          </>
-        )
+    switch(list.item){
       case "ドキュメント種別":
         return <StyledIntputs 
-                title={list} 
+                title={list.item} 
                 select
                 value={genre}
-                handler={handleGenre}
+                handler={list.handler}
                 array={genres}
                 />
-      case "文責":
-        return <StyledIntputs title={list} handler={handleAuthor} />
+        break;
       case "執筆日":
-        return <StyledIntputs type="date" title={list} handler={handleDateChange} />
+        return <StyledIntputs type="date" title={list.item} handler={list.handler} />
+        break;
+      default:
+        return(
+          <>
+            <StyledIntputs title={list.item} handler={handleTitle} />
+            <InputContent>入力内容：{ title  }</InputContent>
+          </>
+        )
+        break;
     }
 })
 
@@ -167,6 +168,7 @@ const CreatePage = () => {
               <InputContent>入力内容：{goal}</InputContent>
             </>
           )
+          break;
         case "開発環境":
           return(
             <>
@@ -210,20 +212,29 @@ const CreatePage = () => {
               </StyledTableContainer>
             </>
           ) 
-        case "ファイル構成":
+          break;
+        case "アプリ概要":
           return(
             <>
               <br />
+              <StyledTitle>{list}</StyledTitle>
               <StyledButton variant="outlined" >
                 <InputFileBtnHide type="file" />
                 ファイル構成図を登録する
               </StyledButton>
             </>
           )
+          break;
+        default:
+          return(
+            <>
+              <StyledIntputs title={list} handler={handleTitle} />
+              <InputContent>入力内容：{title}</InputContent>
+            </>
+        )
+        break;
       }
   })
-
-
 
   return (
     <StyledPaper elevation={2}>
