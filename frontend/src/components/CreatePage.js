@@ -64,13 +64,12 @@ const InputContent = styled.p`
   color: #696969;
   margin-bottom:20px; 
   font-size:15px;
-
 `
 
 const StyledTableContainer = styled(TableContainer)`
   width:40%;
   margin:0 auto;
-  margin-top:50px;
+  margin-bottom:50px;
 `
 
 const StyledTableCell = styled(TableCell)`
@@ -87,38 +86,52 @@ const CreatePage = () => {
   const [date, setDate] = useState('');
   const [isButtonActivate, setIsButtonActivate] = useState(false);
   const [author, setAuthor] = useState('');
-  const [goal, setGoal] = useState('');
+  const [purpose, setPurpose] = useState('');
   const [environ, setEnviron] = useState('');
   const [environItem, setEnvironItem] = useState('');
   const [count, setCount] = useState(3);
+  const [overview, setOverview] = useState('');
 
   const handleTitle = e => setTitle(e.target.value);
   const handleGenre = e => setGenre(e.target.value);
   const handleDateChange = e => setDate(e.target.value);
   const handleAuthor = e => setAuthor(e.target.value);
-  const handleGoal = e => setGoal(e.target.value);
+  const handlePurpose= e => setPurpose(e.target.value);
   const handleEnviron = e => setEnviron(e.target.value);
   const handleEnvironItem = e => setEnvironItem(e.target.value);
+  const handleOverview = e => setOverview(e.target.value);
   
   let counts = [...Array(count)]
   const commons = [
-    {item:"タイトル", target:{ title }},
-    {item:"ドキュメント種別", target:{ genre }},
-    {item:"文責", target:{ author }},
-    {item:"執筆日", target:{ date }},
+    "タイトル", 
+    "ドキュメント種別",
+    "文責",
+    "執筆日",
   ]
 
   useEffect(() => {
-      if(title != "" && genre != "" && author != "" && goal != ""){
-          setIsButtonActivate(false);
+      // if(title != "" && genre != "" && author != "" && purpose!= ""){
 
+    if(title != ""){
+          setIsButtonActivate(false);
       }else{
           setIsButtonActivate(true);
       }
   });
 
   const buttonClicked = () => {
-    alert(`タイトル：${title} ジャンル：${genre} 日付：${date} 著者：${author} 内容:${goal}`);
+    let body = {};
+    if(genre == "引き継ぎ資料"){
+      body.title = title;
+      body.genre = genre;
+      body.date = date;
+      body.author = author;
+      body.purpose = purpose;
+      body.environ = environ;
+      body.overview = overview;
+    }
+    
+    console.log(body);
   }
   const plus = () => {
     setCount(count+1);
@@ -128,27 +141,35 @@ const CreatePage = () => {
   }
 
   const common = commons.map( list => {
-    switch(list.item){
-      case "ドキュメント種別":
-        return <StyledIntputs 
-                title={list.item} 
-                select
-                value={genre}
-                handler={list.handler}
-                array={genres}
-                />
-        break;
-      case "執筆日":
-        return <StyledIntputs type="date" title={list.item} handler={list.handler} />
-        break;
-      default:
+    /*
+    ここのリファクタリング必要
+    同様の記述が複数見られるので、できればまとめたい
+    */
+    switch(list){
+      case "タイトル":
         return(
           <>
-            <StyledIntputs title={list.item} handler={handleTitle} />
-            <InputContent>入力内容：{ title  }</InputContent>
+            <StyledIntputs title={list} handler={ handleTitle }/>
+            <InputContent>入力内容：{ title }</InputContent>
           </>
         )
-        break;
+      case "ドキュメント種別":
+        return <StyledIntputs 
+                title={list} 
+                select
+                value={genre}
+                handler={handleGenre}
+                array={genres}
+                />
+      case "文責":
+        return(
+          <>
+            <StyledIntputs title={list} handler={ handleAuthor }/>
+            <InputContent>入力内容：{ author }</InputContent>
+          </>
+        )
+      case "執筆日":
+        return <StyledIntputs type="date" title={list} handler={ handleDateChange } />
     }
 })
 
@@ -163,21 +184,42 @@ const CreatePage = () => {
               label={list}
               multiline
               rows={4}
-              onChange={handleGoal}
+              onChange={ handlePurpose}
               />
-              <InputContent>入力内容：{goal}</InputContent>
+              <InputContent>入力内容：{purpose}</InputContent>
             </>
           )
-          break;
+          case "アプリ概要":
+            return(
+              <>
+                <StyledTitle>{list}</StyledTitle>
+                <DecoratedTextField
+                id="outlined-multiline-static"
+                label={list}
+                multiline
+                rows={4}
+                onChange={ handleOverview }
+                />
+                <InputContent>入力内容：{overview}</InputContent>
+              </>
+            )
+        case "参考資料":
+          let th = "参考資料";
+          let td = "URL"
         case "開発環境":
+          if(list == "開発環境"){
+            th = "分類";
+            td = "情報";
+          }
           return(
             <>
+              <StyledTitle>{list}</StyledTitle>
               <StyledTableContainer component={Paper}>
                 <Table size="small" aria-label="a dense table">
                   <TableHead>
                     <TableRow>
-                      <TableCell align='center'>分類</TableCell>
-                      <TableCell align='center'>情報</TableCell>
+                      <TableCell align='center'>{th}</TableCell>
+                      <TableCell align='center'>{td}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -212,8 +254,7 @@ const CreatePage = () => {
               </StyledTableContainer>
             </>
           ) 
-          break;
-        case "アプリ概要":
+        case "アプリケーション全体像":
           return(
             <>
               <br />
@@ -224,7 +265,6 @@ const CreatePage = () => {
               </StyledButton>
             </>
           )
-          break;
         default:
           return(
             <>
@@ -232,7 +272,6 @@ const CreatePage = () => {
               <InputContent>入力内容：{title}</InputContent>
             </>
         )
-        break;
       }
   })
 
