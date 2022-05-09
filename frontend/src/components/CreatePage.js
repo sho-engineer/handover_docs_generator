@@ -142,16 +142,15 @@ const CreatePage = () => {
       body.environ = devEnvirons;
       body.overview = overview;
     }
+    console.log(body)
     
-    console.log(body);
   }
   const plus = () => {
     setCount(count+1);
   }
   const minus = () => {
     setCount(count-1);
-    selectedEnviron.splice(count,1);
-    selectedEnvironItem.splice(count,1);
+    devEnvirons.splice(count,1);
   }
   const common = commons.map( list => {
     /*
