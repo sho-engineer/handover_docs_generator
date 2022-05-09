@@ -26,8 +26,8 @@ const genres = [
 
 const environs = [
   "OS",
-  "言語",
-  "バージョン"
+  "言語/バージョン",
+  "フレームワーク/バージョン"
 ]
 
 const StyledPaper = styled(Paper)`
@@ -67,7 +67,7 @@ const InputContent = styled.p`
 `
 
 const StyledTableContainer = styled(TableContainer)`
-  width:40%;
+  width:80%;
   margin:0 auto;
   margin-bottom:50px;
 `
@@ -79,6 +79,9 @@ const StyledTableCell = styled(TableCell)`
 const TextFieldInTables = styled(DecoratedTextField)`
   width:100%;
 `
+let devEnvirons = [];
+let selectedEnviron = [];
+let selectedEnvironItem = [];
 
 const CreatePage = () => {
   const [title, setTitle] = useState('');
@@ -89,29 +92,37 @@ const CreatePage = () => {
   const [purpose, setPurpose] = useState('');
   const [environ, setEnviron] = useState('');
   const [environItem, setEnvironItem] = useState('');
-  const [count, setCount] = useState(3);
+  const [count, setCount] = useState(1);
   const [overview, setOverview] = useState('');
 
+  let counts = [...Array(count)];
+  
   const handleTitle = e => setTitle(e.target.value);
   const handleGenre = e => setGenre(e.target.value);
   const handleDateChange = e => setDate(e.target.value);
   const handleAuthor = e => setAuthor(e.target.value);
   const handlePurpose= e => setPurpose(e.target.value);
-  const handleEnviron = e => setEnviron(e.target.value);
-  const handleEnvironItem = e => setEnvironItem(e.target.value);
+  const handleEnviron = e => {
+    setEnviron(e.target.value);
+    selectedEnviron[count] = e.target.value;
+  }
+  const handleEnvironItem = e => {
+    setEnvironItem(e.target.value);
+    selectedEnvironItem[count] = e.target.value;
+    devEnvirons[count] = {env:selectedEnviron[count],item:selectedEnvironItem[count]}
+  }
   const handleOverview = e => setOverview(e.target.value);
   
-  let counts = [...Array(count)]
   const commons = [
     "タイトル", 
     "ドキュメント種別",
     "文責",
     "執筆日",
   ]
+  
 
   useEffect(() => {
       // if(title != "" && genre != "" && author != "" && purpose!= ""){
-
     if(title != ""){
           setIsButtonActivate(false);
       }else{
@@ -121,13 +132,14 @@ const CreatePage = () => {
 
   const buttonClicked = () => {
     let body = {};
+    
     if(genre == "引き継ぎ資料"){
       body.title = title;
       body.genre = genre;
       body.date = date;
       body.author = author;
       body.purpose = purpose;
-      body.environ = environ;
+      body.environ = devEnvirons;
       body.overview = overview;
     }
     
@@ -138,8 +150,9 @@ const CreatePage = () => {
   }
   const minus = () => {
     setCount(count-1);
+    selectedEnviron.splice(count,1);
+    selectedEnvironItem.splice(count,1);
   }
-
   const common = commons.map( list => {
     /*
     ここのリファクタリング必要
@@ -184,7 +197,7 @@ const CreatePage = () => {
               label={list}
               multiline
               rows={4}
-              onChange={ handlePurpose}
+              onChange={ handlePurpose }
               />
               <InputContent>入力内容：{purpose}</InputContent>
             </>
