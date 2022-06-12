@@ -30,6 +30,12 @@ const environs = [
   "フレームワーク/バージョン"
 ]
 
+const refersItem = [
+  "Webサイト",
+  "書籍",
+  "記事" 
+]
+
 const StyledPaper = styled(Paper)`
   text-align:center;
   width:95%;
@@ -142,7 +148,6 @@ const CreatePage = () => {
       body.environ = devEnvirons;
       body.overview = overview;
     }
-    console.log(body)
     
   }
   const plus = () => {
@@ -217,11 +222,13 @@ const CreatePage = () => {
             )
         case "参考資料":
           let th = "参考資料";
-          let td = "URL"
+          let td = "URL";
+          let items = refersItem;
         case "開発環境":
           if(list == "開発環境"){
             th = "分類";
             td = "情報";
+            items = environs;
           }
           return(
             <>
@@ -245,7 +252,7 @@ const CreatePage = () => {
                                   label={list}
                                   onChange={handleEnviron}
                                 >
-                                  {environs.map((val, index) => (
+                                  {items.map((val, index) => (
                                       <MenuItem key={index} value={val}>
                                           {val}
                                       </MenuItem>
