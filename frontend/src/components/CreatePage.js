@@ -85,9 +85,18 @@ const StyledTableCell = styled(TableCell)`
 const TextFieldInTables = styled(DecoratedTextField)`
   width:100%;
 `
+// 開発環境全体
 let devEnvirons = [];
+// 選択されている開発環境(タイトル)
 let selectedEnviron = [];
+// 選択されている開発環境(内容)
 let selectedEnvironItem = [];
+// 参考文献
+let refers = [];
+// 選択されている参考文献タイトル
+let selectedReferTitle = [];
+// 選択されている参考文献アイテム
+let selectedReferItem = [];
 
 const CreatePage = () => {
   const [title, setTitle] = useState('');
@@ -100,6 +109,7 @@ const CreatePage = () => {
   const [environItem, setEnvironItem] = useState('');
   const [count, setCount] = useState(1);
   const [overview, setOverview] = useState('');
+  const [refer, setRefer] = useState('');
 
   let counts = [...Array(count)];
   
@@ -118,6 +128,11 @@ const CreatePage = () => {
     devEnvirons[count] = {env:selectedEnviron[count],item:selectedEnvironItem[count]}
   }
   const handleOverview = e => setOverview(e.target.value);
+  const handleRefers = e => {
+    setRefer(e.target.value);
+    selectedReferItem[count] = e.target.value;
+    refers[count] = {refer:selectedReferTitle[count],item:selectedReferItem[count]}
+  }
   
   const commons = [
     "タイトル", 
@@ -147,7 +162,10 @@ const CreatePage = () => {
       body.purpose = purpose;
       body.environ = devEnvirons;
       body.overview = overview;
+      body.refers = refers;
     }
+
+    alert(JSON.stringify(body));
     
   }
   const plus = () => {
@@ -260,7 +278,7 @@ const CreatePage = () => {
                                 </TextFieldInTables>
                               </StyledTableCell>
                               <StyledTableCell align='left'>
-                                <TextFieldInTables onChange={handleEnvironItem}/>
+                                <TextFieldInTables onChange={list = "参考文献" ? handleRefers:handleEnvironItem}/>
                               </StyledTableCell>
                             </TableRow>
                           )
@@ -276,7 +294,6 @@ const CreatePage = () => {
         case "アプリケーション全体像":
           return(
             <>
-              <br />
               <StyledTitle>{list}</StyledTitle>
               <StyledButton variant="outlined" >
                 <InputFileBtnHide type="file" />
