@@ -153,6 +153,10 @@ const CreatePage = () => {
 
   const buttonClicked = () => {
     let body = {};
+    if(devEnvirons) {
+      // 開発環境が入力されていたら、配列の先頭がnullになっているため削除する
+      devEnvirons.shift();
+    }
     
     if(genre == "引き継ぎ資料"){
       body.title = title;
