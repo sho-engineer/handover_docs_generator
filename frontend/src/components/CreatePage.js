@@ -107,11 +107,11 @@ const CreatePage = () => {
   const [purpose, setPurpose] = useState('');
   const [environ, setEnviron] = useState('');
   const [environItem, setEnvironItem] = useState('');
-  const [count, setCount] = useState(1);
+  const [devCount, setDevCount] = useState(1);
   const [overview, setOverview] = useState('');
   const [refer, setRefer] = useState('');
 
-  let counts = [...Array(count)];
+  let devCounts = [...Array(devCount)];
   
   const handleTitle = e => setTitle(e.target.value);
   const handleGenre = e => setGenre(e.target.value);
@@ -120,12 +120,12 @@ const CreatePage = () => {
   const handlePurpose= e => setPurpose(e.target.value);
   const handleEnviron = e => {
     setEnviron(e.target.value);
-    selectedEnviron[count] = e.target.value;
+    selectedEnviron[devCount] = e.target.value;
   }
   const handleEnvironItem = e => {
     setEnvironItem(e.target.value);
-    selectedEnvironItem[count] = e.target.value;
-    devEnvirons[count] = {env:selectedEnviron[count],item:selectedEnvironItem[count]}
+    selectedEnvironItem[devCount] = e.target.value;
+    devEnvirons[devCount] = {env:selectedEnviron[devCount],item:selectedEnvironItem[devCount]}
   }
   const handleOverview = e => setOverview(e.target.value);
   const handleRefers = e => {
@@ -172,12 +172,12 @@ const CreatePage = () => {
     alert(JSON.stringify(body));
     
   }
-  const plus = () => {
-    setCount(count+1);
+  const plusOneToDevCount = () => {
+    setDevCount(devCount+1);
   }
-  const minus = () => {
-    setCount(count-1);
-    devEnvirons.splice(count,1);
+  const minusOneFromDevCount = () => {
+    setDevCount(devCount-1);
+    devEnvirons.splice(devCount,1);
   }
   const common = commons.map( list => {
     /*
