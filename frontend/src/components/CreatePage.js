@@ -108,10 +108,12 @@ const CreatePage = () => {
   const [environ, setEnviron] = useState('');
   const [environItem, setEnvironItem] = useState('');
   const [devCount, setDevCount] = useState(1);
+  const [referCount, setReferCount] = useState(1);
   const [overview, setOverview] = useState('');
   const [refer, setRefer] = useState('');
 
   let devCounts = [...Array(devCount)];
+  let referCounts = [...Array(referCount)];
   
   const handleTitle = e => setTitle(e.target.value);
   const handleGenre = e => setGenre(e.target.value);
@@ -130,8 +132,8 @@ const CreatePage = () => {
   const handleOverview = e => setOverview(e.target.value);
   const handleRefers = e => {
     setRefer(e.target.value);
-    selectedReferItem[count] = e.target.value;
-    refers[count] = {refer:selectedReferTitle[count],item:selectedReferItem[count]}
+    selectedReferItem[referCounts] = e.target.value;
+    refers[referCounts] = {refer:selectedReferTitle[referCounts],item:selectedReferItem[referCounts]}
   }
   
   const commons = [
