@@ -179,11 +179,20 @@ const CreatePage = () => {
     setDevCount(devCount+1);
   }
   const minusOneFromDevCount = () => {
-    // 開発環境の-ボタンを押した時にテキストボックスを減少させる
     setDevCount(devCount-1);
     devEnvirons.splice(devCount,1);
   }
   const common = commons.map( list => {
+  const plusOneToReferCount = () => {
+    // 参考文献の+ボタンを押した時にテキストボックスを増加させる
+    setReferCount(referCount+1);
+  }
+
+  const minusOneFromReferCount = () => {
+    // 参考文献の-ボタンを押した時にテキストボックスを減少させる
+    setReferCount(referCount-1);
+    refers.splice(devCount,1);
+  }
     /*
     ここのリファクタリング必要
     同様の記述が複数見られるので、できればまとめたい
