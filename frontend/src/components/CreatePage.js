@@ -175,9 +175,11 @@ const CreatePage = () => {
     
   }
   const plusOneToDevCount = () => {
+    // 開発環境の+ボタンを押した時にテキストボックスを増加させる
     setDevCount(devCount+1);
   }
   const minusOneFromDevCount = () => {
+    // 開発環境の-ボタンを押した時にテキストボックスを減少させる
     setDevCount(devCount-1);
     devEnvirons.splice(devCount,1);
   }
