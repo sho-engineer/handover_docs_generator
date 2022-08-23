@@ -179,6 +179,7 @@ const CreatePage = () => {
     setDevCount(devCount+1);
   }
   const minusOneFromDevCount = () => {
+    // 開発環境の-ボタンを押した時にテキストボックスを減少させる
     setDevCount(devCount-1);
     devEnvirons.splice(devCount,1);
   }
@@ -259,11 +260,17 @@ const CreatePage = () => {
           let th = "参考資料";
           let td = "URL";
           let items = refersItem;
+          let counts = referCounts;
+          let plus = plusOneToReferCount;
+          let minus = minusOneFromReferCount;
         case "開発環境":
           if(list == "開発環境"){
             th = "分類";
             td = "情報";
             items = environs;
+            counts = devCounts;
+            plus = plusOneToDevCount;
+            minus = minusOneFromDevCount;
           }
           return(
             <>
