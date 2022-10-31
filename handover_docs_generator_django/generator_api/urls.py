@@ -1,8 +1,8 @@
-from unicodedata import name
-from django.urls import path
 from rest_framework import routers
-from .views import SendDocumentApi, UserApi
+from .views import UserViewSet, DocumentViewSet
 
 router = routers.DefaultRouter()
-router.register(r'users', UserApi)
-router.register(r'send_documents', SendDocumentApi)
+router.register(r'users', UserViewSet, basename="users")
+router.register(r'documents', DocumentViewSet, basename="documents")
+
+urlpatterns = router.urls
