@@ -10,4 +10,4 @@ class UserSerializer(serializers.ModelSerializer):
 class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Document
-        fiels = '__all__'
+        fields = '__all__'
