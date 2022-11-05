@@ -9,6 +9,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import styled from 'styled-components';
 import { Grid } from '@mui/material';
+import axios from 'axios';
 
 const columns = [
   { id: 'ID', label: 'ID', minWidth: 170 },
@@ -20,27 +21,14 @@ const columns = [
   { id: 'URL', label: 'URL'},
 ];
 
+const baseUrl = 'http://127.0.0.1:8000';
+const documentApiUrl = `${baseUrl}/api/documents/`;
+
 function createData(ID, Indentifier, Type, Created_At, Updated_At, Writer, URL) {
   return { ID, Indentifier, Type, Created_At, Updated_At, Writer, URL};
 }
 
-const rows = [
-  createData('India', 'IN', 1324171354, 3287263),
-  createData('China', 'CN', 1403500365, 9596961),
-  createData('Italy', 'IT', 60483973, 301340),
-  createData('United States', 'US', 327167434, 9833520),
-  createData('Canada', 'CA', 37602103, 9984670),
-  createData('Australia', 'AU', 25475400, 7692024),
-  createData('Germany', 'DE', 83019200, 357578),
-  createData('Ireland', 'IE', 4857000, 70273),
-  createData('Mexico', 'MX', 126577691, 1972550),
-  createData('Japan', 'JP', 126317000, 377973),
-  createData('France', 'FR', 67022000, 640679),
-  createData('United Kingdom', 'GB', 67545757, 242495),
-  createData('Russia', 'RU', 146793744, 17098246),
-  createData('Nigeria', 'NG', 200962417, 923768),
-  createData('Brazil', 'BR', 210147125, 8515767),
-];
+const rows = [];
 
 export default function DocumentList() {
   const [page, setPage] = React.useState(0);
@@ -55,6 +43,26 @@ export default function DocumentList() {
   const StyledGrid = styled(Grid)`
     margin-top:8px;
   `
+
+  React.useEffect(async () => {
+    // 非同期通信でデータベースの情報を取得する
+    await axios.get(documentApiUrl)
+    .then((res) => {
+      // データを取得
+      let data = res.data;
+      for(let d of data){
+        console.info(`Obtained data through axios: URL:${documentApiUrl}`);
+        let id = d.id;
+        let title = d.title;
+        let genre = d.genre;
+        let author = d.author;
+        let date = d.date; 
+        let rowData = createData(id, genre, title, author, date);
+        // 表示するための配列にpushする
+        rows.push(rowData);   
+      }    
+    });
+  },[]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
