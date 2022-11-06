@@ -12,20 +12,19 @@ import { Grid } from '@mui/material';
 import axios from 'axios';
 
 const columns = [
-  { id: 'ID', label: 'ID', minWidth: 170 },
-  { id: 'Indentifier', label: 'Indentifier'},
-  { id: 'Type', label: 'Type'},
-  { id: 'Created_At', label: 'Created_At'},
-  { id: 'Updated_At', label: 'Updated_At'},
-  { id: 'Writer', label: 'Writer'},
-  { id: 'URL', label: 'URL'},
+  { id: 'id', label: 'Id', minWidth: 170 },
+  { id: 'genre', label: 'Genre'},
+  { id: 'title', label: 'Title'},
+  { id: 'author', label: 'Author'},
+  { id: 'overview', label: 'Overview'},
+  { id: 'date', label: 'Date'},
 ];
 
 const baseUrl = 'http://127.0.0.1:8000';
 const documentApiUrl = `${baseUrl}/api/documents/`;
 
-function createData(ID, Indentifier, Type, Created_At, Updated_At, Writer, URL) {
-  return { ID, Indentifier, Type, Created_At, Updated_At, Writer, URL};
+function createData(id, genre, title, author, overview, date) {
+  return {id, genre, title, author, overview, date};
 }
 
 const rows = [];
@@ -56,8 +55,9 @@ export default function DocumentList() {
         let title = d.title;
         let genre = d.genre;
         let author = d.author;
+        let overview = d.overview;
         let date = d.date; 
-        let rowData = createData(id, genre, title, author, date);
+        let rowData = createData(id, genre, title, author, overview, date);
         // 表示するための配列にpushする
         rows.push(rowData);   
       }    
