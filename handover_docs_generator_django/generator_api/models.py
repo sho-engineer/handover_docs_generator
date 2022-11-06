@@ -66,7 +66,15 @@ class CustomUserManager(UserManager):
         param: **extra_fields array その他のパラメータ
         """
         return self._create_user(email=email, username=username, password=password, **extra_fields)
-    
+
+
+class CustomerUser(AbstractUser):
+    objects = CustomUserManager()
+
+    def __str__(self):
+        return self.email
+
+
 class Document(models.Model):
     title = models.TextField(name="title", null=False)
     genre = models.CharField(name="genre", max_length=255)
