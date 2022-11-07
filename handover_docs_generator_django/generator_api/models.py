@@ -68,7 +68,7 @@ class CustomUserManager(UserManager):
         return self._create_user(email=email, username=username, password=password, **extra_fields)
 
 
-class CustomerUser(AbstractUser):
+class CustomUser(AbstractUser):
     objects = CustomUserManager()
 
     def __str__(self):
