@@ -140,4 +140,4 @@ REST_FRAMEWORK = {
 }
 
 FRONTEND_URL = 'http://127.0.0.1:8000/'
-AUTH_USER_MODEL = 'generator_api.User'
+AUTH_USER_MODEL = 'generator_api.CustomUser'
