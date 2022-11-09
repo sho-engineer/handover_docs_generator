@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf.urls import url 
-from django.urls import include
+from django.urls import include,path
 from generator_api.urls import router as api_router
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(api_router.urls)),
+    path('accounts/', include('allauth.urls')),
 ]
