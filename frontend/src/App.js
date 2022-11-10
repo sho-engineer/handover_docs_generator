@@ -1,11 +1,13 @@
 import React from 'react';
-import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import MenuAppBar from './components/layouts/MenuAppBar';
+import { Route, Routes} from 'react-router-dom';
+import { Login } from './components/accounts/Login';
 
 const App = () => {
   return (
     <>
-      <MenuAppBar />
+      <Routes>
+        <Route exact path="/" element={<Login />} />
+      </Routes>
     </>
   );
 }
