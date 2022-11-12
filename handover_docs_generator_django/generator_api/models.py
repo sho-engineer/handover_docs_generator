@@ -1,7 +1,6 @@
-from calendar import c
-from distutils.archive_util import make_zipfile
-from re import T
-from tkinter import N
+from email.policy import default
+from tabnanny import verbose
+from unicodedata import name
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
 from django_mysql.models import ListCharField
@@ -53,8 +52,6 @@ class CustomUserManager(UserManager):
             raise ValueError('ユーザー名が入力されていません')
         
         # その他のパラメータを追加
-        #  extra_fields.setdefault('is_staff', False)
-        
         return self._create_user(email=email, username=username, password=password, **extra_fields)
 
     def create_superuser(self, username, email=None, password=None, **extra_fields):
@@ -70,9 +67,11 @@ class CustomUserManager(UserManager):
 
 class CustomUser(AbstractUser):
     objects = CustomUserManager()
-
+    is_authenticated = models.BooleanField(name="Auth status", default=False)
+    is_login = models.BooleanField(name="Login status", default=False)
+    
     def __str__(self):
-        return self.email
+        return self.username
 
 
 class Document(models.Model):
