@@ -67,8 +67,8 @@ class CustomUserManager(UserManager):
 
 class CustomUser(AbstractUser):
     objects = CustomUserManager()
-    is_authenticated = models.BooleanField(name="Auth status", default=False)
-    is_login = models.BooleanField(name="Login status", default=False)
+    is_authenticated = models.BooleanField(default=False)
+    is_login = models.BooleanField(default=False)
     
     def __str__(self):
         return self.username
