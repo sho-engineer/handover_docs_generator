@@ -17,6 +17,21 @@ import Redirect from "react-router-dom";
 import axios from 'axios';
 import {baseUrl} from '../../App';
 
+const executeSignUp = async(password, username, email, passwordConfirm) => {
+  console.log(isPasswordPasswordConfirmSame(password,passwordConfirm));
+  await axios.post(`${baseUrl}/api/users/`, {
+    password: password,
+    username: username,
+    last_login: new Date(),
+    email: email,
+    is_authed: true,
+    is_loggedin: true
+  })
+  .then(() => {
+    window.location = "/";
+  })
+}
+
 export const SignUp = () => {
   // ユーザー名とパスワードとEmailを定義
   const [username, setUsername] = React.useState('');
