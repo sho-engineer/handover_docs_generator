@@ -32,6 +32,12 @@ const executeSignUp = async(password, username, email, passwordConfirm) => {
   })
 }
 
+const isPasswordPasswordConfirmSame = (pw, pwConfirm) => {
+  // パスワードと確認用パスワードが同じであればTrue
+  if(pw === pwConfirm) return true
+  return false
+}
+
 export const SignUp = () => {
   // ユーザー名とパスワードとEmailを定義
   const [username, setUsername] = React.useState('');
