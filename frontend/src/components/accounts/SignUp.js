@@ -13,8 +13,22 @@ import {
   Typography
 } from "@mui/material";
 import { teal } from "@mui/material/colors";
+import Redirect from "react-router-dom";
+import axios from 'axios';
+import {baseUrl} from '../../App';
 
 export const SignUp = () => {
+  // ユーザー名とパスワードとEmailを定義
+  const [username, setUsername] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [passwordConfirm, setPasswordConfirm] = React.useState('');
+
+  let handleUsername = e => setUsername(e.target.value);
+  let handlePassword = e => setPassword(e.target.value);
+  let handleEmail = e => setEmail(e.target.value);
+  let handlePasswordConfirm = e => setPasswordConfirm(e.target.value);
+
   return (
     <Grid>
       <Paper
@@ -38,17 +52,27 @@ export const SignUp = () => {
             Sign Up
           </Typography>
         </Grid>
-        <TextField label="Username" variant="standard" fullWidth required />
+        <TextField label="Username" variant="standard" onChange={handleUsername} fullWidth required />
+        <TextField type="email" label="Email" variant="standard" onChange={handleEmail} fullWidth required />
         <TextField
           type="password"
           label="Password"
           variant="standard"
           fullWidth
+          onChange = {handlePassword}
+          required
+        />
+        <TextField
+          type="password"
+          label="Password Confirm"
+          variant="standard"
+          fullWidth
+          onChange = {handlePasswordConfirm}
           required
         />
         {/* ラベルとチェックボックス */}
         <Box mt={3}>
-          <Button type="submit" color="primary" variant="contained" fullWidth>
+          <Button type="submit" color="primary" variant="contained" onClick={executeSignUp(password, username, email, passwordConfirm)} fullWidth>
             登録
           </Button>
           <Typography variant="caption" display="block">
